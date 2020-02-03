@@ -1,0 +1,3 @@
+This is where the JSON files will be stored. Ideally, you won't have to manually create them but you should be able to drop any that have been manually written here and (if they are formatted correctly) the program will be able to load them as a flash card item without any trouble.
+
+The goal is ultimately to be able to routinely consolodate all loose files into a single JSON file from time to time to cut down on have to parse multiple files.

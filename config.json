@@ -1,0 +1,5 @@
+{
+    "isNightMode" : false,
+    "library_folder" : "res://card_library/",
+    "image_folder" : "res://image_library/"
+}

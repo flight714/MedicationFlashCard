@@ -1,0 +1,1 @@
+This is where any card images that you want saved will end up. You can do whatever you want with the pictures at this point, so print away or make a great Quizlet collection!
