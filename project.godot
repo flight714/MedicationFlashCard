@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "CanvasLayer",
+"class": "FlashCard",
+"language": "GDScript",
+"path": "res://flashcard_code/FlashCard.gd"
+} ]
 _global_script_class_icons={
-
+"FlashCard": ""
 }
 
 [application]

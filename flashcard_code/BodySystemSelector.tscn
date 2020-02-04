@@ -1,0 +1,301 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://flashcard_code/BodySystemSelector.gd" type="Script" id=1]
+[ext_resource path="res://assets/gradient_circle.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/Barlow_Condensed/BarlowCondensed-ExtraBold.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends TextureButton
+
+export (String) var system = \"CV\"
+
+func _ready():
+	pass
+
+# warning-ignore:unused_argument
+func _process(delta):
+	$Label.text = system
+	rect_pivot_offset = rect_size*0.5
+	#$Label.rect_pivot_offset = $Label.rect_size*0.5
+	#$Label.rect_position = -$Label.rect_position*0.5
+	self_modulate = ProgramController.check_body_system_color(\"null\")
+	self_modulate.a = 0.5
+	$Label.self_modulate = ProgramController.check_body_system_color(system)
+"
+
+[sub_resource type="DynamicFont" id=2]
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="BodySystemSelector" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.0696411
+margin_bottom = 0.0695801
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CV" type="TextureButton" parent="."]
+margin_left = 300.0
+margin_top = 511.247
+margin_right = 350.0
+margin_bottom = 561.247
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="CV"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="CNS" type="TextureButton" parent="."]
+margin_left = 176.459
+margin_top = 519.133
+margin_right = 226.459
+margin_bottom = 569.133
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "CNS"
+
+[node name="Label" type="Label" parent="CNS"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="HEME" type="TextureButton" parent="."]
+margin_left = 423.541
+margin_top = 532.933
+margin_right = 473.541
+margin_bottom = 582.933
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "HEME"
+
+[node name="Label" type="Label" parent="HEME"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="ENDO" type="TextureButton" parent="."]
+margin_left = 332.857
+margin_top = 375.22
+margin_right = 382.857
+margin_bottom = 425.22
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "ENDO"
+
+[node name="Label" type="Label" parent="ENDO"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="GU" type="TextureButton" parent="."]
+margin_left = 219.172
+margin_top = 603.903
+margin_right = 269.172
+margin_bottom = 653.903
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "GU"
+
+[node name="Label" type="Label" parent="GU"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="RESP" type="TextureButton" parent="."]
+margin_left = 120.602
+margin_top = 576.961
+margin_right = 170.602
+margin_bottom = 626.961
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "RESP"
+
+[node name="Label" type="Label" parent="RESP"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="EENT" type="TextureButton" parent="."]
+margin_left = 229.687
+margin_top = 423.848
+margin_right = 279.687
+margin_bottom = 473.848
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "EENT"
+
+[node name="Label" type="Label" parent="EENT"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="MS" type="TextureButton" parent="."]
+margin_left = 89.0596
+margin_top = 445.534
+margin_right = 139.06
+margin_bottom = 495.534
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "MS"
+
+[node name="Label" type="Label" parent="MS"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="SKIN" type="TextureButton" parent="."]
+margin_left = 330.885
+margin_top = 637.417
+margin_right = 380.885
+margin_bottom = 687.417
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "SKIN"
+
+[node name="Label" type="Label" parent="SKIN"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="Other" type="TextureButton" parent="."]
+margin_left = 160.687
+margin_top = 668.959
+margin_right = 210.687
+margin_bottom = 718.959
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "Other"
+
+[node name="Label" type="Label" parent="Other"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
+
+[node name="GI" type="TextureButton" parent="."]
+margin_left = 178.43
+margin_top = 310.164
+margin_right = 228.43
+margin_bottom = 360.164
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 2 )
+expand = true
+script = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+system = "GI"
+
+[node name="Label" type="Label" parent="GI"]
+margin_left = 1.93958
+margin_top = 14.5118
+margin_right = 47.9396
+margin_bottom = 34.5118
+custom_fonts/font = SubResource( 2 )
+text = "CNS"
+align = 1
+valign = 1
