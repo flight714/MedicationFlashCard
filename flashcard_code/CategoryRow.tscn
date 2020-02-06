@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/fonts/MainButtonTheme.tres" type="Theme" id=1]
+[ext_resource path="res://flashcard_code/CategoryRow.gd" type="Script" id=2]
+[ext_resource path="res://assets/fonts/MainButtonStyleBox.tres" type="StyleBox" id=3]
+
+[node name="CategoryRow" type="ItemList"]
+anchor_left = 0.017
+anchor_top = 0.01
+anchor_right = 0.983
+anchor_bottom = 0.049
+margin_left = -0.200001
+margin_top = -0.240001
+margin_right = 0.199951
+margin_bottom = -0.176003
+theme = ExtResource( 1 )
+custom_styles/cursor = ExtResource( 3 )
+custom_styles/selected_focus = ExtResource( 3 )
+custom_styles/bg_focus = ExtResource( 3 )
+custom_styles/cursor_unfocused = ExtResource( 3 )
+custom_styles/selected = ExtResource( 3 )
+custom_styles/bg = ExtResource( 3 )
+auto_height = true
+max_columns = 22
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

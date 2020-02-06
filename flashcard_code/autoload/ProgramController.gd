@@ -148,12 +148,21 @@ func check_body_system_color(system : String):
 			return ColorN("white")
 		else:
 			return ColorN("black")
+			
+func get_body_system_by_effect(effect : String) -> String:
+	var body_system = "null"
+	for k in body_system_dict:
+		if effect == k:
+			body_system = k
+		elif body_system_dict[k]["known_effects"].has(effect):
+			body_system = k
+	return body_system
 		
 func is_night_mode() -> bool:
-	return config_settings["isNightMode"]
+	return config_settings["isNightMode"] == true
 
 func get_background_color() -> Color:
 	if is_night_mode():
 		return ColorN("black")
 	else:
-		return ColorN("white")
+		return Color(1,1,1)
