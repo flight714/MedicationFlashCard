@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "FlashCard",
 "language": "GDScript",
 "path": "res://flashcard_code/FlashCard.gd"
+}, {
+"base": "CenterContainer",
+"class": "TextEditMenu",
+"language": "GDScript",
+"path": "res://flashcard_code/TextEditMenu.gd"
 } ]
 _global_script_class_icons={
-"FlashCard": ""
+"FlashCard": "",
+"TextEditMenu": ""
 }
 
 [application]

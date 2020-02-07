@@ -9,8 +9,11 @@ script/source = "extends TextureButton
 
 export (String) var system = \"CV\"
 
+signal send_selection(system_selection)
+
 func _ready():
-	pass
+# warning-ignore:return_value_discarded
+	connect(\"pressed\", self, \"_on_pressed\")
 
 # warning-ignore:unused_argument
 func _process(delta):
@@ -21,9 +24,14 @@ func _process(delta):
 	self_modulate = ProgramController.check_body_system_color(\"null\")
 	self_modulate.a = 0.5
 	$Label.self_modulate = ProgramController.check_body_system_color(system)
+
+func _on_pressed():
+	emit_signal(\"send_selection\", system)
 "
 
 [sub_resource type="DynamicFont" id=2]
+outline_size = 1
+outline_color = Color( 0.513726, 0.501961, 0.501961, 1 )
 use_filter = true
 font_data = ExtResource( 3 )
 

@@ -1,0 +1,116 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://flashcard_code/TextEditMenu.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/Barlow_Condensed/BarlowCondensed-ExtraBold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/fonts/IBM_Plex_Serif/IBMPlexSerif-SemiBoldItalic.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/fonts/Barlow_Condensed/BarlowCondensed-Black.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/fonts/MainButtonStyleBox.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/fonts/IBM_Plex_Serif/IBMPlexSerif-ExtraLight.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 6 )
+
+[node name="CenterContainer" type="CenterContainer"]
+anchor_left = -0.000665131
+anchor_top = 0.000389755
+anchor_right = 0.999335
+anchor_bottom = 1.00039
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 41.0
+margin_top = 398.0
+margin_right = 559.0
+margin_bottom = 625.0
+rect_min_size = Vector2( 500, 156 )
+custom_constants/separation = 19
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 518.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 1 )
+align = 1
+valign = 1
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer"]
+margin_top = 39.0
+margin_right = 518.0
+margin_bottom = 139.0
+rect_min_size = Vector2( 500, 100 )
+custom_fonts/font = SubResource( 2 )
+smooth_scrolling = true
+wrap_enabled = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 158.0
+margin_right = 518.0
+margin_bottom = 186.0
+custom_constants/separation = 100
+
+[node name="Enter" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_right = 53.0
+margin_bottom = 28.0
+theme = SubResource( 4 )
+text = "Enter"
+
+[node name="Previous" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 153.0
+margin_right = 200.0
+margin_bottom = 28.0
+theme = SubResource( 4 )
+text = "Back"
+
+[node name="Exit" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 300.0
+margin_right = 357.0
+margin_bottom = 28.0
+theme = SubResource( 4 )
+text = "Finish"
+
+[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 457.0
+margin_right = 518.0
+margin_bottom = 28.0
+theme = SubResource( 4 )
+text = "Cancel"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 205.0
+margin_right = 518.0
+margin_bottom = 227.0
+custom_constants/separation = 8
+
+[node name="EntriesLabel" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_top = 1.0
+margin_right = 97.0
+margin_bottom = 21.0
+custom_fonts/font = SubResource( 1 )
+text = "Current Entries:"
+align = 1
+valign = 1
+
+[node name="Entries" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 105.0
+margin_right = 105.0
+margin_bottom = 22.0
+custom_styles/normal = ExtResource( 5 )
+custom_fonts/font = SubResource( 5 )
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Enter" to="." method="_on_Enter_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Previous" to="." method="_on_Previous_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Cancel" to="." method="_on_Cancel_pressed"]

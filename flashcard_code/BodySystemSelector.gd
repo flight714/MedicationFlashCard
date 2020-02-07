@@ -7,6 +7,8 @@ var center : Vector2
 var open_distance = 100
 
 var is_menu_open = false
+signal selected_system(item)
+signal _menu_closed
 
 func _ready():
 	center = get_viewport().size*0.5
@@ -17,6 +19,10 @@ func _ready():
 		points.append(new_node)
 		points[i].position = center
 		labels[i].rect_position = points[i].position - labels[i].rect_size*0.5
+	
+	for c in get_children():
+		if c is TextureButton:
+			c.connect("send_selection", self, "item_selected")
 		
 	var rotation_rate = deg2rad(360/labels.size())
 	for i in points.size():
@@ -43,6 +49,9 @@ func open_menu():
 	yield(open_tween, "tween_completed")
 	is_menu_open = true
 	open_tween.queue_free()
+	for c in get_children():
+		if c is TextureButton:
+			c.disabled = false
 	
 func close_menu():
 	var close_tween = Tween.new()
@@ -54,8 +63,20 @@ func close_menu():
 	yield(close_tween, "tween_completed")
 	is_menu_open = false
 	close_tween.queue_free()
+	emit_signal("_menu_closed")
 	
-
+func item_selected(category : String):
+	close_menu()
+	yield(self, "_menu_closed")
+	for c in get_children():
+		if c is TextureButton:
+			c.disabled = false
+	emit_signal("selected_system", category)
+	hide()
+	yield(get_tree().create_timer(0.5), "timeout")
+	queue_free()
+	
+	
 	
 
 	

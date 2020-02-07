@@ -1,13 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://flashcard_code/FlashCard.gd" type="Script" id=1]
-[ext_resource path="res://assets/fonts/IBM_Plex_Serif/IBMPlexSerif-Bold.ttf" type="DynamicFontData" id=2]
-
-[sub_resource type="DynamicFont" id=1]
-size = 26
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 2 )
+[ext_resource path="res://flashcard_code/CategoryRow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://flashcard_code/DynamicLabel.tscn" type="PackedScene" id=3]
 
 [node name="FlashCard" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -23,132 +18,107 @@ __meta__ = {
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CardTitle" type="Label" parent="Control"]
-anchor_left = -0.00107188
-anchor_right = -0.00107188
-anchor_bottom = 0.0166016
-margin_left = 86.1438
-margin_top = 50.607
-margin_right = 147.144
-margin_bottom = 68.607
-custom_fonts/font = SubResource( 1 )
-text = "false"
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Generic" type="Label" parent="Control"]
-anchor_left = -0.00107188
-anchor_right = -0.00107188
-anchor_bottom = 0.0166016
-margin_left = 86.1438
-margin_top = 50.607
-margin_right = 147.144
-margin_bottom = 68.607
-custom_fonts/font = SubResource( 1 )
-text = "Generic Name(s):"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="GenericNames" parent="Control/VBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 580.0
+margin_bottom = 0.0
 
-[node name="Brand" type="Label" parent="Control"]
-anchor_left = -0.00107188
-anchor_right = -0.00107188
-anchor_bottom = 0.0166016
-margin_left = 86.1438
-margin_top = 50.607
-margin_right = 147.144
-margin_bottom = 68.607
-custom_fonts/font = SubResource( 1 )
-text = "Brand Name(s):"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="BrandNames" parent="Control/VBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 3.0
+margin_right = 580.0
+margin_bottom = 3.0
 
-[node name="Indication" type="Label" parent="Control"]
-anchor_left = -0.00107188
-anchor_right = -0.00107188
-anchor_bottom = 0.0166016
-margin_left = 86.1438
-margin_top = 50.607
-margin_right = 147.144
-margin_bottom = 68.607
-custom_fonts/font = SubResource( 1 )
-text = "Indication:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Indication" parent="Control/VBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 6.0
+margin_right = 580.0
+margin_bottom = 6.0
 
-[node name="Action" type="Label" parent="Control"]
-anchor_left = -0.00107188
-anchor_right = -0.00107188
-anchor_bottom = 0.0166016
-margin_left = 86.1438
-margin_top = 50.607
-margin_right = 147.144
-margin_bottom = 68.607
-custom_fonts/font = SubResource( 1 )
-text = "Action:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Action" parent="Control/VBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 9.0
+margin_right = 580.0
+margin_bottom = 9.0
 
-[node name="Route" type="Label" parent="Control"]
-anchor_left = -0.00107188
-anchor_right = -0.00107188
-anchor_bottom = 0.0166016
-margin_left = 86.1438
-margin_top = 50.607
-margin_right = 147.144
-margin_bottom = 68.607
-custom_fonts/font = SubResource( 1 )
-text = "Route:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Route" parent="Control/VBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 12.0
+margin_right = 580.0
+margin_bottom = 12.0
 
-[node name="AdverseReactions" type="Label" parent="Control"]
-anchor_left = -0.00107188
-anchor_right = -0.00107188
-anchor_bottom = 0.0166016
-margin_left = 86.1438
-margin_top = 50.607
-margin_right = 147.144
-margin_bottom = 68.607
-custom_fonts/font = SubResource( 1 )
-text = "Adverse Reactions:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="AdverseEffects" parent="Control/VBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 15.0
+margin_right = 580.0
+margin_bottom = 15.0
 
-[node name="BlackBoxWarnings" type="Label" parent="Control"]
-anchor_left = -0.00107188
-anchor_right = -0.00107188
-anchor_bottom = 0.0166016
-margin_left = 86.1438
-margin_top = 50.607
-margin_right = 147.144
-margin_bottom = 68.607
-custom_fonts/font = SubResource( 1 )
-text = "Blackbox Warning:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="BlackboxWarning" parent="Control/VBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 18.0
+margin_right = 580.0
+margin_bottom = 18.0
 
-[node name="LabEffects" type="Label" parent="Control"]
-anchor_left = -0.00107188
-anchor_right = -0.00107188
-anchor_bottom = 0.0166016
-margin_left = 86.6431
-margin_top = 51.0
-margin_right = 228.643
-margin_bottom = 69.0
-custom_fonts/font = SubResource( 1 )
-text = "Lab Effects"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="LabEffect" parent="Control/VBoxContainer" instance=ExtResource( 2 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 0.0
+margin_top = 21.0
+margin_right = 580.0
+margin_bottom = 21.0
+
+[node name="CardTitle" parent="." instance=ExtResource( 3 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 0.0
+margin_bottom = 0.0
+text = "Medication Name"
+align = 1
+valign = 1

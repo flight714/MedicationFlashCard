@@ -21,8 +21,9 @@ custom_styles/cursor_unfocused = ExtResource( 3 )
 custom_styles/selected = ExtResource( 3 )
 custom_styles/bg = ExtResource( 3 )
 auto_height = true
-max_columns = 22
+max_columns = 9
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="item_activated" from="." to="." method="_on_CategoryRow_item_activated"]
