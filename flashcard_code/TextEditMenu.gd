@@ -3,7 +3,7 @@ extends CenterContainer
 class_name TextEditMenu
 
 enum EditMode {DESCRIPTION, NAME, SERIES}
-var current_mode = EditMode.DESCRIPTION
+var current_mode = EditMode.SERIES
 
 var text_body = ""
 var text_array = []
@@ -12,7 +12,8 @@ var category = "null"
 var system = ""
 
 signal finished_entry(category, entry)
-signal finished_system_entry(system_name, entry)
+signal finished_system_entry(entry)
+signal canceled_menu()
 
 func _ready():
 	setup_menu()
@@ -37,12 +38,15 @@ func setup_menu():
 	if current_mode == EditMode.SERIES:
 		$VBoxContainer/Label.text = "Please enter the first item and hit Enter to continue adding items or Finish to submit"
 
+func load_existing_array(existing_array : Array):
+	text_array = existing_array
 
 func _on_Enter_pressed():
 	if current_mode == EditMode.SERIES:
 		if $VBoxContainer/TextEdit.text == "":
 			text_array.remove(current_index)
 		else:
+			clean_input()
 			$VBoxContainer/Label.text = "Please enter the next item (or hit Finish)"
 			if !text_array.has($VBoxContainer/TextEdit.text):
 				text_array.append($VBoxContainer/TextEdit.text)
@@ -51,6 +55,7 @@ func _on_Enter_pressed():
 				current_index += 1
 				
 	if current_mode == EditMode.DESCRIPTION or current_mode == EditMode.NAME:
+		clean_input()
 		text_body = $VBoxContainer/TextEdit.text
 		send_result()
 		end_menu()
@@ -59,13 +64,19 @@ func _on_Enter_pressed():
 func _process(delta):
 	$VBoxContainer/HBoxContainer2/Entries.text = str(text_array)
 
+func _unhandled_key_input(event):
+	if event.is_action_released("enter_key"):
+		_on_Enter_pressed()
+	if event.is_action_released("ui_cancel"):
+		_on_Cancel_pressed()
+
 func _on_Exit_pressed():
 	# finalize results
 	send_result()
 	end_menu()
 
-
 func _on_Cancel_pressed():
+	emit_signal("canceled_menu")
 	end_menu()
 	
 func end_menu():
@@ -83,10 +94,14 @@ func _on_Previous_pressed():
 	
 func send_result():
 	if system.length() > 0:
-		emit_signal("finished_system_entry", system, text_array)
+		emit_signal("finished_system_entry", text_array)
+		print(text_array)
 	else:
-			
 		if current_mode == EditMode.SERIES:
 			emit_signal("finished_entry", category, text_array)
 		else:
 			emit_signal("finished_entry", category, text_body)
+
+func clean_input():
+	var text = $VBoxContainer/TextEdit.text.strip_edges()
+	$VBoxContainer/TextEdit.text = text

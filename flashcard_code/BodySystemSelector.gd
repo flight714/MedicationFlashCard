@@ -8,7 +8,7 @@ var open_distance = 100
 
 var is_menu_open = false
 signal selected_system(item)
-signal _menu_closed
+signal _menu_closed()
 
 func _ready():
 	center = get_viewport().size*0.5
@@ -75,8 +75,4 @@ func item_selected(category : String):
 	hide()
 	yield(get_tree().create_timer(0.5), "timeout")
 	queue_free()
-	
-	
-	
 
-	

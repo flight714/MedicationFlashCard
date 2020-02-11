@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://flashcard_code/FlashCard.gd" type="Script" id=1]
 [ext_resource path="res://flashcard_code/CategoryRow.tscn" type="PackedScene" id=2]
 [ext_resource path="res://flashcard_code/DynamicLabel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://flashcard_code/DynamicBackground.tscn" type="PackedScene" id=4]
 
 [node name="FlashCard" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -122,3 +123,6 @@ margin_bottom = 0.0
 text = "Medication Name"
 align = 1
 valign = 1
+
+[node name="Forground" parent="." instance=ExtResource( 4 )]
+mouse_filter = 2

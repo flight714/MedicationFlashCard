@@ -7,6 +7,7 @@ var categories_alpha = 1
 
 var dynamic_label = preload("res://flashcard_code/DynamicLabel.tscn")
 var system_menu = preload("res://flashcard_code/BodySystemSelector.tscn")
+var system_list_menu = preload("res://flashcard_code/ListSelector.tscn")
 var text_menu = preload("res://flashcard_code/TextEditMenu.tscn")
 
 onready var category_dict = {
@@ -77,7 +78,10 @@ func _process(delta):
 				category_dict[k]["label"].mouse_filter = Control.MOUSE_FILTER_STOP
 			else:
 				category_dict[k]["label"].mouse_filter = Control.MOUSE_FILTER_IGNORE
-			
+				
+	if $Forground.background_alpha == 0.0 and $Forground.mouse_filter != Control.MOUSE_FILTER_IGNORE:
+		$Forground.mouse_filter = Control.MOUSE_FILTER_IGNORE
+#
 # warning-ignore:unused_argument
 func _unhandled_input(event):
 	#testing
@@ -121,6 +125,7 @@ func update_categories():
 			category_dict[k]["label"].add_line_item(category_dict[k]["name"])
 
 func add_new_item_to_category(category : String):
+	$Forground.fade_in()
 	if category == "Adverse Reactions:":
 		var new_menu = system_menu.instance()
 		add_child(new_menu)
@@ -129,20 +134,39 @@ func add_new_item_to_category(category : String):
 		add_text_edit_menu(category)
 		
 func select_adverse_effect(category : String):
-	#testing
-	pass
-
-func add_new_adverse_effect(category : String, effect : String):
 	if !category_dict["Adverse Reactions:"]["systems"].has(category):
-		category_dict["Adverse Reactions:"]["systems"][category] = [effect]
+		category_dict["Adverse Reactions:"]["systems"][category] = []
+	var new_system_menu = system_list_menu.instance()
+	new_system_menu.get_starting_info(category, category_dict["Adverse Reactions:"]["systems"][category])
+	add_child(new_system_menu)
+	new_system_menu.connect("report_result", self, "change_effect_in_dict")
+	new_system_menu.connect("tree_exited", self, "return_main_screen")
+
+func add_new_adverse_effect(category : String, effect : Array):
+	if !category_dict["Adverse Reactions:"]["systems"].has(category):
+		category_dict["Adverse Reactions:"]["systems"][category] = effect
 	else:
-		category_dict["Adverse Reactions:"]["systems"][category].append(effect)
+		category_dict["Adverse Reactions:"]["systems"][category] = effect
+	print(str(category_dict["Adverse Reactions:"]["systems"]))
 	update_categories()
 	
-func change_item_in_category(category: String, item_text : String):
-	print(category + " " + item_text)
+func change_item_in_category(category: String, item : String):
+	if category == "Brand Name(s):":
+		if category_dict[category]["names"].has(item):
+			category_dict[category]["names"].remove(item)
+	if category == "Route:":
+		if category_dict[category]["routes"].has(item):
+			category_dict[category]["routes"].remove(item)
+		
+	update_categories()
+	# this needs to be expanded on for editing
+	
+func change_effect_in_dict(category: String, items : Array):
+	add_new_adverse_effect(category, items)
+	return_main_screen()
 	
 func add_text_edit_menu(category : String):
+	$Forground.fade_in()
 	var new_text_menu = text_menu.instance()
 	new_text_menu.category = category
 	if category_dict[category].has("text"):
@@ -155,6 +179,7 @@ func add_text_edit_menu(category : String):
 		new_text_menu.current_mode = TextEditMenu.EditMode.SERIES
 	add_child(new_text_menu)
 	new_text_menu.connect("finished_entry", self, "recieve_text_menu_result")
+	new_text_menu.connect("canceled_menu", self, "return_main_screen")
 
 func recieve_text_menu_result(category : String, new_item):
 	if category == "title_card_position" or category == "Generic Name(s):":
@@ -169,8 +194,8 @@ func recieve_text_menu_result(category : String, new_item):
 		if new_item.size() > 0:
 			for i in new_item:
 				category_dict[category]["routes"].append(i)
-	
 	update_categories()
+	return_main_screen()
 
 # EFFECTS
 func flip_card_to_title():
@@ -190,3 +215,6 @@ func flip_card_to_categories():
 	flip_tween.start()
 	yield(flip_tween, "tween_completed")
 	flip_tween.queue_free()
+
+func return_main_screen():
+	$Forground.fade_out()

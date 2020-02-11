@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://flashcard_code/DynamicLabel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://flashcard_code/ListSelector.gd" type="Script" id=2]
+[ext_resource path="res://assets/fonts/SubmenuButton.tres" type="Theme" id=4]
+
+[node name="CenterContainer" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 50.0
+margin_top = 249.0
+margin_right = 550.0
+margin_bottom = 775.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 500.0
+margin_bottom = 22.0
+custom_constants/separation = 113
+
+[node name="AddNew" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_right = 71.0
+margin_bottom = 22.0
+theme = ExtResource( 4 )
+text = "Add New"
+
+[node name="Submit" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 184.0
+margin_right = 318.0
+margin_bottom = 22.0
+theme = ExtResource( 4 )
+text = "Submit Selection"
+
+[node name="Cancel" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 431.0
+margin_right = 485.0
+margin_bottom = 22.0
+theme = ExtResource( 4 )
+text = "Cancel"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 26.0
+margin_right = 500.0
+margin_bottom = 526.0
+rect_min_size = Vector2( 500, 500 )
+follow_focus = true
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
+margin_right = 433.0
+margin_bottom = 56.0
+custom_constants/vseparation = 8
+custom_constants/hseparation = 21
+
+[node name="Selection" parent="VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource( 1 )]
+margin_right = 433.0
+text = ""
+
+[node name="DynamicLabel" parent="VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource( 1 )]
+margin_top = 32.0
+margin_right = 433.0
+margin_bottom = 56.0
+text = "Select a known effect from the list or add a new one"
+align = 1
+valign = 1
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/AddNew" to="." method="_on_AddNew_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Submit" to="." method="_on_Submit_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Cancel" to="." method="_on_Cancel_pressed"]
