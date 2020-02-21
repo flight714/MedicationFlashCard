@@ -14,39 +14,48 @@ onready var category_dict = {
 	"title_card_position" : {
 		"name" : "New Medication",
 		"label" : $CardTitle,
+		"data_name" : "NULL"
 		},
 	"Generic Name(s):" : {
 		"name" : "",
-		"label" : $Control/VBoxContainer/GenericNames
+		"label" : $Control/VBoxContainer/GenericNames,
+		"data_name" : "generic"
 		},
 	"Brand Name(s):" : {
 		"names" : [],
 		"label" : $Control/VBoxContainer/BrandNames,
+		"data_name" : "brand"
 		},
 	"Indication:" : {
 		"text" : "",
 		"label" : $Control/VBoxContainer/Indication,
+		"data_name" : "indication"
 		},
 	"Route:" : {
 		"routes" : [],
 		"label" : $Control/VBoxContainer/Route,
+		"data_name" : "route"
 		},
 	"Action:" : {
 		"text" : "",
 		"label" : $Control/VBoxContainer/Action,
+		"data_name" : "action"
 		},
 	"Adverse Reactions:" : {
 		"systems" : {
 		},
 		"label" : $Control/VBoxContainer/AdverseEffects,
+		"data_name" : "adverse_reactions"
 		},
 	"Blackbox Warning:" : {
 		"text" : "N/A",
 		"label" : $Control/VBoxContainer/BlackboxWarning,
+		"data_name" : "blackbox_warning"
 		},
 	"Lab Effect:" : {
 		"text" : "N/A",
 		"label" : $Control/VBoxContainer/LabEffect,
+		"data_name" : "lab_effect"
 		}
 	}
 
@@ -218,3 +227,36 @@ func flip_card_to_categories():
 
 func return_main_screen():
 	$Forground.fade_out()
+	
+# LOADING/EXPORTING
+
+func load_data(incoming_dict : Dictionary):
+	for k in category_dict:
+		for i in incoming_dict:
+			if category_dict[k]["data_name"] == i:
+				if category_dict[k].has("name"):
+					category_dict[k]["name"] = incoming_dict[i]
+				if category_dict[k].has("names"):
+					category_dict[k]["names"] = incoming_dict[i]
+				if category_dict[k].has("text"):
+					category_dict[k]["text"] = incoming_dict[i]
+				if category_dict[k].has("routes"):
+					category_dict[k]["routes"] = incoming_dict[i]
+				if category_dict[k].has("systems"):
+					category_dict[k]["systems"] = incoming_dict[i]
+	update_categories()
+
+func export_data() -> Dictionary:
+	var export_dict = {}
+	for k in category_dict:
+			if category_dict[k].has("name"):
+				export_dict[category_dict[k]["data_name"]] = category_dict[k]["name"]
+			if category_dict[k].has("names"):
+				export_dict[category_dict[k]["data_name"]] = category_dict[k]["names"]
+			if category_dict[k].has("text"):
+				export_dict[category_dict[k]["data_name"]] = category_dict[k]["text"]
+			if category_dict[k].has("routes"):
+				export_dict[category_dict[k]["data_name"]] = category_dict[k]["routes"]
+			if category_dict[k].has("systems"):
+				export_dict[category_dict[k]["data_name"]] = category_dict[k]["systems"]
+	return export_dict
