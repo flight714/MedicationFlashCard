@@ -13,11 +13,17 @@ var background_color = Color(0,0,0)
 var background_alpha = 0.0
 
 func _ready():
+	if ProgramController.body_system_dict.has(system):
+		for e in ProgramController.body_system_dict[system]["known_effects"]:
+			if !body_system_category.has(e):
+				body_system_category.append(e)
 	rect_scale = Vector2(0,0)
 	for effect in body_system_category:
 		_add_button(effect)
 	for existing in selected_effects:
-		_add_button(existing)
+		if !body_system_category.has(existing):
+			body_system_category.append(existing)
+			_add_button(existing)
 	roll_in()
 	check_array_and_update_text()
 

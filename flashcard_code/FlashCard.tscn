@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://flashcard_code/FlashCard.gd" type="Script" id=1]
 [ext_resource path="res://flashcard_code/CategoryRow.tscn" type="PackedScene" id=2]
 [ext_resource path="res://flashcard_code/DynamicLabel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://flashcard_code/DynamicBackground.tscn" type="PackedScene" id=4]
+[ext_resource path="res://flashcard_code/NightModeSwitch.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/export_icon.png" type="Texture" id=6]
+[ext_resource path="res://assets/flip_icon.png" type="Texture" id=7]
+[ext_resource path="res://assets/WrenchIcon.png" type="Texture" id=8]
 
 [node name="FlashCard" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -115,6 +119,40 @@ margin_top = 21.0
 margin_right = 580.0
 margin_bottom = 21.0
 
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+margin_top = 24.0
+margin_right = 580.0
+margin_bottom = 54.0
+custom_constants/separation = 240
+
+[node name="NightModeSwitch" parent="Control/VBoxContainer/HBoxContainer" instance=ExtResource( 5 )]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+expand = true
+
+[node name="FlipCard" type="TextureButton" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 270.0
+margin_right = 300.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 7 )
+texture_focused = ExtResource( 7 )
+expand = true
+
+[node name="ExportButton" type="TextureButton" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 540.0
+margin_right = 570.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 6 )
+texture_focused = ExtResource( 6 )
+expand = true
+
 [node name="CardTitle" parent="." instance=ExtResource( 3 )]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -124,5 +162,48 @@ text = "Medication Name"
 align = 1
 valign = 1
 
+[node name="HBoxContainer" type="HBoxContainer" parent="CardTitle"]
+margin_left = 208.0
+margin_top = 536.0
+margin_right = 358.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 0, 30 )
+custom_constants/separation = 100
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="FlipCard2" type="TextureButton" parent="CardTitle/HBoxContainer"]
+margin_right = 30.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 30, 30 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 7 )
+texture_focused = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChangeName" type="TextureButton" parent="CardTitle/HBoxContainer"]
+margin_left = 130.0
+margin_right = 170.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 20 )
+texture_normal = ExtResource( 8 )
+texture_hover = ExtResource( 8 )
+texture_focused = ExtResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Forground" parent="." instance=ExtResource( 4 )]
 mouse_filter = 2
+[connection signal="change_mode" from="Control/VBoxContainer/HBoxContainer/NightModeSwitch" to="." method="_on_NightModeSwitch_change_mode"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/FlipCard" to="." method="_on_FlipCard_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/ExportButton" to="." method="_on_ExportButton_pressed"]
+[connection signal="pressed" from="CardTitle/HBoxContainer/FlipCard2" to="." method="_on_FlipCard_pressed"]
+[connection signal="pressed" from="CardTitle/HBoxContainer/ChangeName" to="." method="_on_ChangeName_pressed"]

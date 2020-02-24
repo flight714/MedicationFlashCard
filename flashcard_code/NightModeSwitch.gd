@@ -1,6 +1,6 @@
 extends TextureButton
 
-var sun_icon = preload("res://assets/sun.png")
+var sun_icon = preload("res://assets/sun_icon.png")
 var moon_icon = preload("res://assets/moon.png")
 signal change_mode
 

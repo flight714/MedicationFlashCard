@@ -87,3 +87,4 @@ margin_top = 300.0
 margin_right = 164.0
 margin_bottom = 300.0
 [connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/CreateNew" to="." method="_on_CreateNew_pressed"]
+[connection signal="change_mode" from="CanvasLayer/CenterContainer/VBoxContainer/NightModeSwitch" to="." method="_on_NightModeSwitch_change_mode"]

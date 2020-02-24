@@ -169,3 +169,13 @@ func get_background_color() -> Color:
 		
 func switch_night_mode():
 	config_settings["isNightMode"] = !config_settings["isNightMode"]
+	
+func add_new_entry_to_library(new_entry : Dictionary):
+	for k in new_entry:
+		flash_card_libary[k] = new_entry[k]
+	for k in flash_card_libary:
+		for c in flash_card_libary[k]["adverse_reactions"]:
+			for e in flash_card_libary[k]["adverse_reactions"][c]:
+				if !body_system_dict[c].has(e):
+					body_system_dict[c]["known_effects"].append(e)
+	save_dict_as_json(flash_card_libary, "user_library", config_settings["library_folder"])

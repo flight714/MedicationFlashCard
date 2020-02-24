@@ -10,6 +10,8 @@ var system_menu = preload("res://flashcard_code/BodySystemSelector.tscn")
 var system_list_menu = preload("res://flashcard_code/ListSelector.tscn")
 var text_menu = preload("res://flashcard_code/TextEditMenu.tscn")
 
+signal export_data(data)
+
 onready var category_dict = {
 	"title_card_position" : {
 		"name" : "New Medication",
@@ -66,13 +68,15 @@ func _ready():
 	update_screen_rect()
 # warning-ignore:return_value_discarded
 	get_tree().connect("screen_resized", self, "update_screen_rect")
+# warning-ignore:return_value_discarded
+	connect("export_data", ProgramController, "add_new_entry_to_library")
 	
 	for box in $Control/VBoxContainer.get_children():
+		if box is HBoxContainer:
+			continue
 		box.connect("category_clicked", self, "add_new_item_to_category")
 		box.connect("item_clicked", self, "change_item_in_category")
 		
-	test_load()
-	print(export_data())
 
 	
 # warning-ignore:unused_argument
@@ -92,6 +96,7 @@ func _process(delta):
 				
 	if $Forground.background_alpha == 0.0 and $Forground.mouse_filter != Control.MOUSE_FILTER_IGNORE:
 		$Forground.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$Control/VBoxContainer/HBoxContainer.modulate.a = categories_alpha
 #
 # warning-ignore:unused_argument
 func _unhandled_input(event):
@@ -192,6 +197,19 @@ func add_text_edit_menu(category : String):
 	new_text_menu.connect("finished_entry", self, "recieve_text_menu_result")
 	new_text_menu.connect("canceled_menu", self, "return_main_screen")
 
+func add_title_change_menu():
+	$Forground.fade_in()
+	var new_text_menu = text_menu.instance()
+	new_text_menu.category = "title_card_position"
+	new_text_menu.current_mode = TextEditMenu.EditMode.DESCRIPTION
+	add_child(new_text_menu)
+	new_text_menu.connect("finished_entry", self, "change_title_card")
+	new_text_menu.connect("canceled_menu", self, "return_main_screen")
+	
+func change_title_card(category : String, new_name : String):
+	category_dict["title_card_position"]["name"] = new_name
+	update_categories()
+
 func recieve_text_menu_result(category : String, new_item):
 	if category == "title_card_position" or category == "Generic Name(s):":
 		category_dict[category]["name"] = new_item
@@ -255,52 +273,42 @@ func export_data() -> Dictionary:
 	var export_dict = {}
 	for k in category_dict:
 			if category_dict[k].has("name") and k != "title_card_position":
-				export_dict[k]["data_name"] = category_dict[k]["name"]
+				var category = category_dict[k]["data_name"]
+				export_dict[category] = category_dict[k]["name"]
 			if category_dict[k].has("names"):
-				export_dict[k]["data_name"] = category_dict[k]["names"]
+				var category = category_dict[k]["data_name"]
+				export_dict[category] = category_dict[k]["names"]
 			if category_dict[k].has("text"):
-				export_dict[k]["data_name"] = category_dict[k]["text"]
+				var category = category_dict[k]["data_name"]
+				export_dict[category] = category_dict[k]["text"]
 			if category_dict[k].has("routes"):
-				export_dict[category_dict[k]["data_name"]] = category_dict[k]["routes"]
+				var category = category_dict[k]["data_name"]
+				export_dict[category] = category_dict[k]["routes"]
 			if category_dict[k].has("systems"):
-				export_dict[category_dict[k]["data_name"]] = category_dict[k]["systems"]
+				var category = category_dict[k]["data_name"]
+				export_dict[category] = category_dict[k]["systems"]
 	var final_export_dict = {
 		category_dict["title_card_position"]["name"] : export_dict
 	}
 	return final_export_dict
-	
-func test_load():
-	var new_dict = {
-		"generic": "verapamil hydrochloride",
-		"brand": [
-			"Apo-Verap (CAN)",
-			"Calan",
-			"Novo-Veramil (CAN)",
-			"Nu-Verap (CAN)",
-			"Calan SR",
-			"Covera-HS",
-			"Verelan",
-			"Verelan PM"
-		],
-		"indication": "",
-		"route": [
-			"PO","IV"
-		],
-		"action": "Calcium channel blocker",
-		"adverse_reactions": {
-			"CNS": ["CVA"],
-			"CV": ["ECG abnormalitites","AV conduction disorders","bradycardia","heart failure","hypotension","MI"],
-			"EENT": [],
-			"ENDO": [],
-			"GI": [],
-			"GU": [],
-			"RESP": ["pulmonary edema"],
-			"HEME": [],
-			"MS": [],
-			"SKIN": ["erythema multiforme","Stevens-Johnson Syndrome"],
-			"Other": []
-		},
-		"blackbox_warning": "N/A",
-		"lab_effect": "N/A"
-	}
-	load_data(new_dict, "Veramapil")
+
+func _on_NightModeSwitch_change_mode():
+	$Background.color = ProgramController.get_background_color()
+	for i in $Control.get_child_count():
+		$Control.get_children()[i].modulate = ProgramController.check_body_system_color("null")
+
+
+func _on_ExportButton_pressed():
+	emit_signal("export_data", export_data())
+
+
+func _on_FlipCard_pressed():
+	if title_alpha == 0:
+		flip_card_to_title()
+	else:
+		flip_card_to_categories()
+	print("hit")
+
+
+func _on_ChangeName_pressed():
+	add_title_change_menu()
