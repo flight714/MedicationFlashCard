@@ -70,7 +70,9 @@ func _ready():
 	for box in $Control/VBoxContainer.get_children():
 		box.connect("category_clicked", self, "add_new_item_to_category")
 		box.connect("item_clicked", self, "change_item_in_category")
-	
+		
+	test_load()
+	print(export_data())
 
 	
 # warning-ignore:unused_argument
@@ -230,8 +232,10 @@ func return_main_screen():
 	
 # LOADING/EXPORTING
 
-func load_data(incoming_dict : Dictionary):
+func load_data(incoming_dict : Dictionary, med_name : String):
+	category_dict["title_card_position"]["name"] = med_name
 	for k in category_dict:
+		print(k)
 		for i in incoming_dict:
 			if category_dict[k]["data_name"] == i:
 				if category_dict[k].has("name"):
@@ -244,19 +248,59 @@ func load_data(incoming_dict : Dictionary):
 					category_dict[k]["routes"] = incoming_dict[i]
 				if category_dict[k].has("systems"):
 					category_dict[k]["systems"] = incoming_dict[i]
+					
 	update_categories()
 
 func export_data() -> Dictionary:
 	var export_dict = {}
 	for k in category_dict:
-			if category_dict[k].has("name"):
-				export_dict[category_dict[k]["data_name"]] = category_dict[k]["name"]
+			if category_dict[k].has("name") and k != "title_card_position":
+				export_dict[k]["data_name"] = category_dict[k]["name"]
 			if category_dict[k].has("names"):
-				export_dict[category_dict[k]["data_name"]] = category_dict[k]["names"]
+				export_dict[k]["data_name"] = category_dict[k]["names"]
 			if category_dict[k].has("text"):
-				export_dict[category_dict[k]["data_name"]] = category_dict[k]["text"]
+				export_dict[k]["data_name"] = category_dict[k]["text"]
 			if category_dict[k].has("routes"):
 				export_dict[category_dict[k]["data_name"]] = category_dict[k]["routes"]
 			if category_dict[k].has("systems"):
 				export_dict[category_dict[k]["data_name"]] = category_dict[k]["systems"]
-	return export_dict
+	var final_export_dict = {
+		category_dict["title_card_position"]["name"] : export_dict
+	}
+	return final_export_dict
+	
+func test_load():
+	var new_dict = {
+		"generic": "verapamil hydrochloride",
+		"brand": [
+			"Apo-Verap (CAN)",
+			"Calan",
+			"Novo-Veramil (CAN)",
+			"Nu-Verap (CAN)",
+			"Calan SR",
+			"Covera-HS",
+			"Verelan",
+			"Verelan PM"
+		],
+		"indication": "",
+		"route": [
+			"PO","IV"
+		],
+		"action": "Calcium channel blocker",
+		"adverse_reactions": {
+			"CNS": ["CVA"],
+			"CV": ["ECG abnormalitites","AV conduction disorders","bradycardia","heart failure","hypotension","MI"],
+			"EENT": [],
+			"ENDO": [],
+			"GI": [],
+			"GU": [],
+			"RESP": ["pulmonary edema"],
+			"HEME": [],
+			"MS": [],
+			"SKIN": ["erythema multiforme","Stevens-Johnson Syndrome"],
+			"Other": []
+		},
+		"blackbox_warning": "N/A",
+		"lab_effect": "N/A"
+	}
+	load_data(new_dict, "Veramapil")

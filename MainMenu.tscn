@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/MainButtonStyleBox.tres" type="StyleBox" id=2]
 [ext_resource path="res://assets/fonts/MainButtonTheme.tres" type="Theme" id=3]
+[ext_resource path="res://flashcard_code/NightModeSwitch.tscn" type="PackedScene" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.6, 0.6, 0.6, 0.317647 )
@@ -29,9 +30,9 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer"]
 margin_left = 218.0
-margin_top = 386.0
+margin_top = 362.0
 margin_right = 382.0
-margin_bottom = 638.0
+margin_bottom = 662.0
 custom_constants/separation = 48
 
 [node name="CreateNew" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer"]
@@ -70,8 +71,6 @@ custom_styles/normal = ExtResource( 2 )
 text = "View Selection"
 
 [node name="Settings" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer"]
-anchor_top = -0.0753968
-anchor_bottom = -0.0753968
 margin_top = 225.0
 margin_right = 164.0
 margin_bottom = 252.0
@@ -82,4 +81,9 @@ custom_styles/focus = ExtResource( 2 )
 custom_styles/disabled = ExtResource( 2 )
 custom_styles/normal = ExtResource( 2 )
 text = "Settings"
+
+[node name="NightModeSwitch" parent="CanvasLayer/CenterContainer/VBoxContainer" instance=ExtResource( 4 )]
+margin_top = 300.0
+margin_right = 164.0
+margin_bottom = 300.0
 [connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/CreateNew" to="." method="_on_CreateNew_pressed"]

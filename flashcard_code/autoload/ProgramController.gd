@@ -166,3 +166,6 @@ func get_background_color() -> Color:
 		return ColorN("black")
 	else:
 		return Color(1,1,1)
+		
+func switch_night_mode():
+	config_settings["isNightMode"] = !config_settings["isNightMode"]

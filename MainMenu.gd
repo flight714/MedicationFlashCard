@@ -28,3 +28,12 @@ func fade_out(speed=0.7):
 	fade_tween.start()
 	yield(fade_tween, "tween_all_completed")
 	fade_tween.queue_free()
+	
+func switch_mode():
+	$CanvasLayer/Background.color = ProgramController.get_background_color()
+	for c in $CanvasLayer/CenterContainer/VBoxContainer.get_children():
+		c.modulate = ProgramController.check_body_system_color("null")
+
+
+func _on_NightModeSwitch_change_mode():
+	switch_mode()
