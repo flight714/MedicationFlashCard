@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://flashcard_code/FlashCard.gd" type="Script" id=1]
 [ext_resource path="res://flashcard_code/CategoryRow.tscn" type="PackedScene" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://assets/export_icon.png" type="Texture" id=6]
 [ext_resource path="res://assets/flip_icon.png" type="Texture" id=7]
 [ext_resource path="res://assets/WrenchIcon.png" type="Texture" id=8]
+[ext_resource path="res://assets/exit_icon.png" type="Texture" id=9]
+[ext_resource path="res://assets/arrow_icon.png" type="Texture" id=10]
+[ext_resource path="res://assets/arrow_icon_flipped.png" type="Texture" id=11]
 
 [node name="FlashCard" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -123,7 +126,7 @@ margin_bottom = 21.0
 margin_top = 24.0
 margin_right = 580.0
 margin_bottom = 54.0
-custom_constants/separation = 240
+custom_constants/separation = 150
 
 [node name="NightModeSwitch" parent="Control/VBoxContainer/HBoxContainer" instance=ExtResource( 5 )]
 margin_right = 30.0
@@ -132,8 +135,8 @@ rect_min_size = Vector2( 30, 30 )
 expand = true
 
 [node name="FlipCard" type="TextureButton" parent="Control/VBoxContainer/HBoxContainer"]
-margin_left = 270.0
-margin_right = 300.0
+margin_left = 180.0
+margin_right = 210.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 30, 30 )
 texture_normal = ExtResource( 7 )
@@ -143,14 +146,51 @@ texture_focused = ExtResource( 7 )
 expand = true
 
 [node name="ExportButton" type="TextureButton" parent="Control/VBoxContainer/HBoxContainer"]
-margin_left = 540.0
-margin_right = 570.0
+margin_left = 360.0
+margin_right = 390.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 30, 30 )
 texture_normal = ExtResource( 6 )
 texture_pressed = ExtResource( 6 )
 texture_hover = ExtResource( 6 )
 texture_focused = ExtResource( 6 )
+expand = true
+
+[node name="Exit" type="TextureButton" parent="Control/VBoxContainer/HBoxContainer"]
+margin_left = 540.0
+margin_right = 570.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 9 )
+texture_focused = ExtResource( 9 )
+expand = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer"]
+margin_top = 57.0
+margin_right = 580.0
+margin_bottom = 87.0
+custom_constants/separation = 500
+
+[node name="BackButton" type="TextureButton" parent="Control/VBoxContainer/HBoxContainer2"]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+rect_pivot_offset = Vector2( 15, 15 )
+texture_normal = ExtResource( 10 )
+texture_hover = ExtResource( 10 )
+texture_focused = ExtResource( 10 )
+expand = true
+
+[node name="ForwardButton" type="TextureButton" parent="Control/VBoxContainer/HBoxContainer2"]
+margin_left = 530.0
+margin_right = 560.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+texture_normal = ExtResource( 11 )
+texture_hover = ExtResource( 11 )
+texture_focused = ExtResource( 11 )
 expand = true
 
 [node name="CardTitle" parent="." instance=ExtResource( 3 )]
@@ -205,5 +245,8 @@ mouse_filter = 2
 [connection signal="change_mode" from="Control/VBoxContainer/HBoxContainer/NightModeSwitch" to="." method="_on_NightModeSwitch_change_mode"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/FlipCard" to="." method="_on_FlipCard_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/ExportButton" to="." method="_on_ExportButton_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/ForwardButton" to="." method="_on_ForwardButton_pressed"]
 [connection signal="pressed" from="CardTitle/HBoxContainer/FlipCard2" to="." method="_on_FlipCard_pressed"]
 [connection signal="pressed" from="CardTitle/HBoxContainer/ChangeName" to="." method="_on_ChangeName_pressed"]

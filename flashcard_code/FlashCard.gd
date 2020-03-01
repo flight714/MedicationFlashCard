@@ -11,6 +11,8 @@ var system_list_menu = preload("res://flashcard_code/ListSelector.tscn")
 var text_menu = preload("res://flashcard_code/TextEditMenu.tscn")
 
 signal export_data(data)
+signal go_to_previous_card()
+signal go_to_next_card()
 
 onready var category_dict = {
 	"title_card_position" : {
@@ -70,6 +72,8 @@ func _ready():
 	get_tree().connect("screen_resized", self, "update_screen_rect")
 # warning-ignore:return_value_discarded
 	connect("export_data", ProgramController, "add_new_entry_to_library")
+	connect("go_to_next_card", ProgramController, "go_to_next_card")
+	connect("go_to_previous_card", ProgramController, "go_to_previous_card")
 	
 	for box in $Control/VBoxContainer.get_children():
 		if box is HBoxContainer:
@@ -312,3 +316,17 @@ func _on_FlipCard_pressed():
 
 func _on_ChangeName_pressed():
 	add_title_change_menu()
+
+
+func _on_Exit_pressed():
+	$Forground.fade_in(0.5)
+	yield(get_tree().create_timer(0.6), "timeout")
+# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://MainMenu.tscn")
+
+
+func _on_BackButton_pressed():
+	emit_signal("go_to_previous_card")
+
+func _on_ForwardButton_pressed():
+	emit_signal("go_to_next_card")

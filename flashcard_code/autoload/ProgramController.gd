@@ -1,6 +1,7 @@
 extends Node
 
 var flash_card_path = "res://flashcard_code/FlashCard.tscn"
+var flash_card_preload = preload("res://flashcard_code/FlashCard.tscn")
 var flash_card_libary = {}
 
 var config_settings = {
@@ -55,6 +56,9 @@ var body_system_dict = {
 		"known_effects" : []
 		},
 }
+
+var cards_in_cue = []
+var cued_cards_index = 0
 
 func _ready():
 	var saved_settings = {}
@@ -179,3 +183,23 @@ func add_new_entry_to_library(new_entry : Dictionary):
 				if !body_system_dict[c].has(e):
 					body_system_dict[c]["known_effects"].append(e)
 	save_dict_as_json(flash_card_libary, "user_library", config_settings["library_folder"])
+	
+func go_to_next_card():
+	if cards_in_cue.size() > 1:
+		if cued_cards_index < cards_in_cue.size():
+			cued_cards_index += 1
+			load_card_in_cue()
+			
+func go_to_previous_card():
+	if cards_in_cue.size() > 1:
+		if cued_cards_index - 1 >= 0:
+			cued_cards_index -= 1
+			load_card_in_cue()
+			
+func load_card_in_cue():
+	var card_name = cards_in_cue[cued_cards_index]
+	if flash_card_libary.has(card_name):
+		var card_dict = flash_card_libary[card_name]
+		var new_card = flash_card_preload.instance()
+		new_card.load_data(card_dict, card_name)
+		get_tree().change_scene_to(new_card)
